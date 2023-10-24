@@ -1,13 +1,13 @@
 import DiaryItem from './DiaryItem';
 
-const DiaryList = ({diaryList, onRemove}) => {
+const DiaryList = ({diaryList, onRemove, onEdit}) => {
     console.log(diaryList);
     return(<div className="DiaryList">
         <h2>일기 내용</h2>
         <h4> {diaryList.length}개 만큼 있습니다 </h4>
         <div>
             {diaryList.map((it) => (
-            <DiaryItem key={it.id} {...it} onRemove={onRemove}/>
+            <DiaryItem onEdit={onEdit} key={it.id} {...it} onRemove={onRemove}/>
             ))}
         </div>
     </div>
