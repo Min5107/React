@@ -4,7 +4,7 @@ import "./DiaryEditor.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 // import OptimizeTest from "./OptimizeTest"; // 리랜더링 테스트
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
 
 // const dummyList = [{
@@ -32,7 +32,7 @@ function App() {
   const [data, setData] = useState([]);
   const dataId = useRef(0);
 
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -42,8 +42,8 @@ function App() {
       id: dataId.current,
     };
     dataId.current += 1;
-    setData([newItem, ...data]);
-  };
+    setData((data) => [newItem, ...data]);
+  },[]);
 
   const getData = async () => {
     const res = await fetch("https://jsonplaceholder.typicode.com/comments")
@@ -67,18 +67,17 @@ function App() {
     getData();
   }, [])
 
-  const onRemove = (targetId) => {
+  const onRemove = useCallback((targetId) => {
     console.log(`${targetId}가 삭제되었습니다.`);
-    const newDiaryList = data.filter((it) => it.id !== targetId);
-    setData(newDiaryList);
-  };
+    setData(data => data.filter((it) => it.id !== targetId));
+  },[]);
 
-  const onEdit = (targetId, newContent) => {
-    setData(
+  const onEdit = useCallback((targetId, newContent) => {
+    setData(data =>
       data.map((it) => 
       it.id === targetId ? {...it, content: newContent} : it)
     );
-  };
+  },[]);
 
   const getDiaryAnalysis = useMemo(() => {
     const goodCount = data.filter((it) => it.emotion >=3).length;
