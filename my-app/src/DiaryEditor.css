@@ -74,5 +74,6 @@
   }
   
   .DiaryItem textarea {
+    height: 10rem;
     padding: 10px;
   }
