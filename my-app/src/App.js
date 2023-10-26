@@ -4,7 +4,7 @@ import "./DiaryEditor.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 // import OptimizeTest from "./OptimizeTest"; // 리랜더링 테스트
-import { useEffect, useRef, useState, useMemo, useCallback, useReducer } from "react";
+import React,{ useEffect, useRef, useState, useMemo, useCallback, useReducer } from "react";
 
 
 // const dummyList = [{
@@ -51,6 +51,9 @@ const reducer = (state, action) => {
             default: return state;
   }
 };
+
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 function App() {
   // const [data, setData] = useState([]);
@@ -120,16 +123,25 @@ function App() {
 
   const {goodCount, badCount, goodRatio} = getDiaryAnalysis;
 
+  const memoizedDispatch = useMemo(() => {
+    return { onCreate, onRemove, onEdit };
+  }, []);
+
   return (
-    <div className="App">
+    <DiaryStateContext.Provider value={data}> 
+    <DiaryDispatchContext.Provider value={memoizedDispatch}>
+      <div className="App">
       {/* <OptimizeTest/> 리랜더링 테스트*/}
       <DiaryEditor onCreate={onCreate} />
       <div>전체 일기 : {data.length}</div>
       <div>기분 좋은 일기 개수 : {goodCount}</div>
       <div>기분 나쁜 일기 개수 : {badCount}</div>
       <div>기분 좋은 일기 비율 : {goodRatio} %</div>
-      <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
+      <DiaryList /*onEdit={onEdit} onRemove={onRemove} diaryList={data}*/ />
     </div>
+    </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
+    
   );
 }
 
