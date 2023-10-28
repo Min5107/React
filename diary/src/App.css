@@ -100,4 +100,9 @@ body{
   header button {
     font-family: "Nanum Pen Script", cursive;
   }
+
+  #time{
+    width: 50rem;
+    height: 10rem;
+  }
   
