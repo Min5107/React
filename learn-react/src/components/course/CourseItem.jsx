@@ -20,10 +20,10 @@ function LinkIconBtn ({link}){
   )
 }
 
-function CourseItem({ title, description, thumbnail, isFavorite, link}) {
+function CourseItem({ title, id, description, thumbnail, isFavorite, link, onFavorite}) {
   function handleFavorite(e){
     e.stopPropagation();
-    alert(isFavorite ? ' 좋아요' : '모르겠어요')
+    onFavorite(id, !isFavorite)
   }
 
   function handleItemClick(){
@@ -32,7 +32,7 @@ function CourseItem({ title, description, thumbnail, isFavorite, link}) {
   }
   return (
     <article className="course" onClick={handleItemClick}>
-      <img className="course__img" src={thumbnail} alt="강의 이미지지" />
+      <img className="course__img" src={thumbnail} alt="강의 이미지" />
       <div className="course__body">
         <div className="course__title">{title}</div>
         <div className="course__description">{description}</div>
