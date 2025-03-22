@@ -46,7 +46,7 @@ const Home = () => {
   timeFormat="HH:mm" //시간 포맷 
   timeIntervals={30} // 15분 단위로 선택 가능한 box가 나옴
   timeCaption="time"
-  dateFormat="HH:mm"
+  dateFormat="H:mm"
 
  />
             {dummyData.map(it => (

@@ -11,6 +11,7 @@ import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import MyHeader from './components/MyHeader';
 import MyButton from './components/MyButton';
+import Reservation from './pages/Reservation';
 
 
 export const DiaryStateContext = createContext(null);
@@ -166,7 +167,7 @@ function App() {
         /> */}
 
       <Routes>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={<Reservation/>}/>
         <Route path='/new' element={<New/>}/>
         <Route path='/edit' element={<Edit/>}/>
         <Route path='/diary/:id' element={<Diary/>}/>
